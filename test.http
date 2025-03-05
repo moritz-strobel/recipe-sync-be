@@ -1,0 +1,15 @@
+### GET request to example server
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+    "first_name": "First",
+    "last_name": "Name",
+    "username": "username",
+    "email": "jane.doe@example.com",
+    "passwordHash": "password",
+    "profileTextUrl": "https://example.com/profile",
+    "profileImageUrl": "https://example.com/image.jpg"
+}
+
+###
