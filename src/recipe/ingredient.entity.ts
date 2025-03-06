@@ -4,9 +4,9 @@ import { Recipe } from './recipe.entity';
 
 @Entity()
 export class Ingredient extends BaseEntity {
-  @ManyToOne(() => Recipe)
-  recipe: Recipe;
+    @ManyToOne(() => Recipe)
+    recipe: Recipe;
 
-  @Column()
-  name: string;
+    @Column()
+    name: string;
 }

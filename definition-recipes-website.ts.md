@@ -9,12 +9,13 @@ username: string;
 nationality: string;
 email: string;
 passwordHash: string;  
- profileTextUrl: Text;
+profileTextUrl: Text;
 profileImageUrl: Image;
 allowEmailNotifiaction: boolean;
 allowUpdates: boolean;
 allowAds: boolean;
-notifiactions: Notification; // A user shal be informed if he gets followed, also when hes not signed in currently (notifiaction on next sign in)
+notifiactions: Notification; // A user shal be informed if he gets followed, also when hes not signed in currently (
+notifiaction on next sign in)
 achievements: Achievement; // list of Refernces to Achievements
 follows: User; // Reference to a user. User can follow eachother
 follower: User;  
@@ -73,7 +74,8 @@ interface Cookbook extends BaseEntity {
 user: User; // Reference to an user
 title: string;
 isFavorite: boolean;
-isDeleteable: boolean; // e.g. every user has a list of favorite recipes. this list shall not be public nor shall it be deleted (deletion results in empty cookbook)
+isDeleteable: boolean; // e.g. every user has a list of favorite recipes. this list shall not be public nor shall it be
+deleted (deletion results in empty cookbook)
 isPublic: boolean;
 description: string;
 coverImageUrl: string; // URL zum Titelbild

@@ -8,9 +8,9 @@ import { Image } from './image.entity';
 import { Ingredient } from './ingredient.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Recipe, Tag, Image, Ingredient])],
-  providers: [RecipeService],
-  controllers: [RecipeController],
-  exports: [RecipeService],
+    imports: [TypeOrmModule.forFeature([Recipe, Tag, Image, Ingredient])],
+    providers: [RecipeService],
+    controllers: [RecipeController],
+    exports: [RecipeService],
 })
 export class RecipeModule {}

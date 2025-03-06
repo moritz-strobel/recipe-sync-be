@@ -6,9 +6,9 @@ import { CookbookController } from './cookbook.controller';
 import { RecipeModule } from 'src/recipe/recipe.module';
 
 @Module({
-  imports: [RecipeModule, TypeOrmModule.forFeature([Cookbook])],
-  providers: [CookbookService],
-  controllers: [CookbookController],
-  exports: [CookbookService],
+    imports: [RecipeModule, TypeOrmModule.forFeature([Cookbook])],
+    providers: [CookbookService],
+    controllers: [CookbookController],
+    exports: [CookbookService],
 })
 export class CookbookModule {}
