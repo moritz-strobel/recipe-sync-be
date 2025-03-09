@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Cookbook } from './cookbook.entity';
 import { Repository } from 'typeorm';
 import { RecipeService } from 'src/recipe/recipe.service';
+import { CreateCookbookDto } from './dtos/create-cookbook.dto';
 
 @Injectable()
 export class CookbookService {
@@ -12,7 +13,8 @@ export class CookbookService {
         private readonly recipeService: RecipeService,
     ) {}
 
-    async create(cookbook: Cookbook): Promise<Cookbook> {
+    async create(cookbookDto: CreateCookbookDto): Promise<Cookbook> {
+        const cookbook = this.cookbookRepository.create(cookbookDto);
         return await this.cookbookRepository.save(cookbook);
     }
 
