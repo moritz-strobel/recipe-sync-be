@@ -23,7 +23,7 @@ export class Cookbook extends BaseEntity {
     @Column()
     description: string;
 
-    @Column()
+    @Column({ nullable: true })
     coverImageUrl: string; // URL zum Titelbild
 
     @ManyToMany(() => Recipe)

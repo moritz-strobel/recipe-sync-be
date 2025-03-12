@@ -4,9 +4,10 @@ import { Cookbook } from './cookbook.entity';
 import { CookbookService } from './cookbook.service';
 import { CookbookController } from './cookbook.controller';
 import { RecipeModule } from 'src/recipe/recipe.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
-    imports: [RecipeModule, TypeOrmModule.forFeature([Cookbook])],
+    imports: [RecipeModule, UserModule, TypeOrmModule.forFeature([Cookbook])],
     providers: [CookbookService],
     controllers: [CookbookController],
     exports: [CookbookService],
