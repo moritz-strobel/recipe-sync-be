@@ -11,6 +11,6 @@ import { Ingredient } from './ingredient.entity';
     imports: [TypeOrmModule.forFeature([Recipe, Tag, Image, Ingredient])],
     providers: [RecipeService],
     controllers: [RecipeController],
-    exports: [RecipeService],
+    exports: [RecipeService, TypeOrmModule],
 })
 export class RecipeModule {}
