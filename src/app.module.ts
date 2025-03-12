@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { RecipeModule } from './recipe/recipe.module';
 import { CookbookModule } from './cookbook/cookbook.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -15,6 +16,7 @@ import { CookbookModule } from './cookbook/cookbook.module';
         UserModule,
         RecipeModule,
         CookbookModule,
+        AuthModule,
     ],
 })
 export class AppModule implements OnModuleInit {
