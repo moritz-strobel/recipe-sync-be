@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -11,13 +12,20 @@ export class UserService {
         private usersRepository: Repository<User>,
     ) {}
 
-    async create(createUserDto: CreateUserDto): Promise<User> {
+    async create(createUserDto: CreateUserDto) {
         const user = this.usersRepository.create(createUserDto);
+        if (await this.usersRepository.findOneBy({ email: user.email })) {
+            throw new Error('User with this email already exists');
+        } else if (
+            await this.usersRepository.findOneBy({ username: user.username })
+        ) {
+            throw new Error('User with this username already exists');
+        }
         return await this.usersRepository.save(user);
     }
 
     // (!) Attention: If you use this api in production, implement a "where" filter
-    async readAll(): Promise<User[]> {
+    async readAll() {
         return await this.usersRepository.find();
     }
 
@@ -28,11 +36,12 @@ export class UserService {
         return result ? result[0] : null;
     }
 
-    async update(id: number, data: Partial<CreateUserDto>) {
-        return await this.usersRepository.update(id, data);
+    async update(id: number, updateUserDto: UpdateUserDto) {
+        await this.usersRepository.update(id, updateUserDto);
+        return this.usersRepository.findOneBy({ id });
     }
 
-    async delete(id: number): Promise<void> {
+    async delete(id: number) {
         await this.usersRepository.delete(id);
     }
 }

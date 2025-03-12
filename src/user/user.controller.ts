@@ -4,11 +4,12 @@ import {
     Delete,
     Get,
     Param,
-    Post,
     Put,
+    UsePipes,
+    ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -19,16 +20,17 @@ export class UserController {
         return this.userService.readOne(Number(id));
     }
 
-    @Post()
-    create(@Body() createUserDto: CreateUserDto) {
-        return this.userService.create(createUserDto);
+    @Get()
+    findAll() {
+        return this.userService.readAll();
     }
 
-    @Put(':id') update(
-        @Param('id') id: string,
-        @Body() createUserDto: Partial<CreateUserDto>,
-    ) {
-        return this.userService.update(Number(id), createUserDto);
+    @Put(':id')
+    @UsePipes(
+        new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+    )
+    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+        return this.userService.update(Number(id), updateUserDto);
     }
 
     @Delete(':id') remove(@Param('id') id: string) {
