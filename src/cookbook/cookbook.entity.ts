@@ -15,7 +15,7 @@ export class Cookbook extends BaseEntity {
     isFavorite: boolean;
 
     @Column()
-    isDeleteable: boolean; // e.g. every user has a list of favorite recipes. this list shall not be public nor shall it be deleted (deletion results in empty cookbook)
+    isDeletable: boolean; // e.g. every user has a list of favorite recipes. this list shall not be public nor shall it be deleted (deletion results in empty cookbook)
 
     @Column()
     isPublic: boolean;
@@ -23,7 +23,7 @@ export class Cookbook extends BaseEntity {
     @Column()
     description: string;
 
-    @Column()
+    @Column({ nullable: true })
     coverImageUrl: string; // URL zum Titelbild
 
     @ManyToMany(() => Recipe)

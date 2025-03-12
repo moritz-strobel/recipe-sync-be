@@ -17,7 +17,7 @@ export class Recipe extends BaseEntity {
     @Column()
     title: string;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, (user) => user.recipes)
     user: User;
 
     @Column()
@@ -59,10 +59,10 @@ export class Recipe extends BaseEntity {
     })
     images: Image[];
 
-    @Column()
+    @Column({ nullable: true })
     videoUrl: string;
 
-    @Column()
+    @Column({ nullable: true })
     coverImage: Buffer;
 
     @ManyToMany(() => Tag, { cascade: true, eager: true })
