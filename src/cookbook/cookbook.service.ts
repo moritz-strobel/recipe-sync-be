@@ -4,21 +4,35 @@ import { Cookbook } from './cookbook.entity';
 import { Repository } from 'typeorm';
 import { RecipeService } from 'src/recipe/recipe.service';
 import { CreateCookbookDto } from './dtos/create-cookbook.dto';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class CookbookService {
     constructor(
         @InjectRepository(Cookbook)
         private cookbookRepository: Repository<Cookbook>,
+        @InjectRepository(User)
+        private userRepository: Repository<User>,
         private readonly recipeService: RecipeService,
     ) {}
 
-    async create(cookbookDto: CreateCookbookDto): Promise<Cookbook> {
-        const cookbook = this.cookbookRepository.create(cookbookDto);
+    async create(userId: number, createCookBookDto: CreateCookbookDto) {
+        const user = await this.userRepository.findOneBy({ id: userId });
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const cookbook = this.cookbookRepository.create({
+            ...createCookBookDto,
+            user,
+        });
         return await this.cookbookRepository.save(cookbook);
     }
 
-    // (!) Attention: If you use this api in production, implement a "where" filter
+    async readAllByUser(userId: number) {
+        return await this.cookbookRepository.findBy({ user: { id: userId } });
+    }
+
     async readAll(): Promise<Cookbook[]> {
         return await this.cookbookRepository.find();
     }

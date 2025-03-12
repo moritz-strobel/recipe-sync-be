@@ -1,40 +1,34 @@
-import {
-    Body,
-    Controller,
-    Get,
-    NotFoundException,
-    Param,
-    Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CookbookService } from './cookbook.service';
 import { CreateCookbookDto } from './dtos/create-cookbook.dto';
-import { UserService } from '../user/user.service';
 
 @Controller('cookbook')
 export class CookbookController {
-    constructor(
-        private readonly cookbookService: CookbookService,
-        private readonly userService: UserService,
-    ) {}
+    constructor(private readonly cookbookService: CookbookService) {}
+
+    @Get()
+    async findAll() {
+        return await this.cookbookService.readAll();
+    }
 
     @Get(':userId')
-    async getCookbooks(@Param('userId') userId: string) {
-        const cookbooks = await this.cookbookService.readAll();
-        return cookbooks.filter(
-            (cookbook) => cookbook.user.id === Number(userId),
-        );
+    async findAllByUser(@Param('userId') userId: number) {
+        return await this.cookbookService.readAllByUser(userId);
     }
 
     @Post(':userId')
-    async createCookbook(
-        @Param('userId') userId: string,
+    async create(
+        @Param('userId') userId: number,
         @Body() createCookbookDto: CreateCookbookDto,
     ) {
-        const user = await this.userService.readOne(Number(userId));
-        if (!user) {
-            throw new NotFoundException(`User with ID ${userId} not found`);
-        }
-        createCookbookDto.user = user;
-        return this.cookbookService.create(createCookbookDto);
+        return this.cookbookService.create(userId, createCookbookDto);
+    }
+
+    @Put(':userId')
+    async addRecipe(
+        @Param('cookbookId') cookbookId: number,
+        @Query('recipeId') recipeId: number,
+    ) {
+        return this.cookbookService.addRecipeToCookbook(cookbookId, recipeId);
     }
 }

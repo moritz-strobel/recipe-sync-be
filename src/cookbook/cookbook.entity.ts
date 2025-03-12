@@ -6,7 +6,7 @@ import { Recipe } from 'src/recipe/recipe.entity';
 @Entity()
 export class Cookbook extends BaseEntity {
     @ManyToOne(() => User)
-    user: User; // Reference to an user
+    user: User; // Reference to a user
 
     @Column()
     title: string;

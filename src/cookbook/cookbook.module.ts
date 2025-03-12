@@ -10,6 +10,6 @@ import { UserModule } from '../user/user.module';
     imports: [RecipeModule, UserModule, TypeOrmModule.forFeature([Cookbook])],
     providers: [CookbookService],
     controllers: [CookbookController],
-    exports: [CookbookService],
+    exports: [CookbookService, TypeOrmModule],
 })
 export class CookbookModule {}

@@ -1,13 +1,20 @@
-import { Recipe } from '../../recipe/recipe.entity';
-import { User } from '../../user/user.entity';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class CreateCookbookDto {
-    user: User;
+    @IsString()
     title: string;
+
+    @IsBoolean()
     isFavorite: boolean;
-    isDeletable: boolean;
+
+    @IsBoolean()
     isPublic: boolean;
+
+    @IsOptional()
+    @IsString()
     description: string;
-    coverImageUrl: string;
-    recipes: Recipe[];
+
+    @IsOptional()
+    @IsString()
+    coverImageUrl?: string;
 }
