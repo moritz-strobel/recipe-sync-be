@@ -28,14 +28,18 @@ export class UserService {
             );
         }
 
-        await this.cookbookService.create(user.id, {
-            title: 'Favorites',
-            isFavorite: true,
-            isPublic: false,
-            isDeletable: false,
-        });
+        const newUser = await this.usersRepository.save(user);
+        await this.cookbookService.create(
+            {
+                title: 'Favorites',
+                isFavorite: true,
+                isPublic: false,
+                isDeletable: false,
+            },
+            newUser.id,
+        );
 
-        return await this.usersRepository.save(user);
+        return newUser;
     }
 
     // (!) Attention: If you use this api in production, implement a "where" filter

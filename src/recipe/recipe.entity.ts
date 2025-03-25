@@ -1,7 +1,6 @@
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../shared/base';
 import { User } from 'src/user/user.entity';
-import { Ingredient } from './ingredient.entity';
 
 @Entity()
 export class Recipe extends BaseEntity {
@@ -26,11 +25,8 @@ export class Recipe extends BaseEntity {
     })
     nutriScore: 'A' | 'B' | 'C' | 'D' | 'E';
 
-    @OneToMany(() => Ingredient, (ing) => ing.recipe, {
-        cascade: true,
-        eager: true,
-    })
-    ingredients: Ingredient[];
+    @Column()
+    ingredients: string;
 
     @Column()
     steps: number;
@@ -48,5 +44,5 @@ export class Recipe extends BaseEntity {
     coverImage: string;
 
     @Column()
-    tags: string[];
+    tags: string;
 }

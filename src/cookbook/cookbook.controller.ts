@@ -25,7 +25,7 @@ export class CookbookController {
     async create(
         @Body() data: { userId: number; cookbook: CreateCookbookDto },
     ) {
-        return this.cookbookService.create(data.userId, data.cookbook);
+        return this.cookbookService.create(data.cookbook, data.userId);
     }
 
     @Put(':cookbookId')

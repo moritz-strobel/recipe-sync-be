@@ -5,7 +5,7 @@ import { Recipe } from 'src/recipe/recipe.entity';
 
 @Entity()
 export class Cookbook extends BaseEntity {
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, (user) => user.cookbooks)
     user: User;
 
     @Column()
@@ -20,7 +20,7 @@ export class Cookbook extends BaseEntity {
     @Column()
     isPublic: boolean;
 
-    @Column()
+    @Column({ nullable: true })
     description: string;
 
     @Column({ nullable: true })

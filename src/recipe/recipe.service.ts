@@ -2,8 +2,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Recipe } from './recipe.entity';
 import { Repository } from 'typeorm';
-import { CreateRecipeDto } from './dtos/CreateRecipeDto';
-import { Ingredient } from './ingredient.entity';
+import { CreateRecipeDto } from './dtos/create-recipe.dto';
 import { UserService } from '../user/user.service';
 
 @Injectable()
@@ -11,33 +10,25 @@ export class RecipeService {
     constructor(
         @InjectRepository(Recipe)
         private recipesRepository: Repository<Recipe>,
-        @InjectRepository(Ingredient)
-        private ingredientsRepository: Repository<Ingredient>,
         @Inject(forwardRef(() => UserService))
         private readonly userService: UserService,
     ) {}
 
-    async create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
-        const user = await this.userService.readOne(createRecipeDto.userId);
+    async create(
+        createRecipeDto: CreateRecipeDto,
+        userId: number,
+    ): Promise<Recipe> {
+        const user = await this.userService.readOne(userId);
         if (!user) {
             throw new Error('User not found');
         }
-        const ingredients: Ingredient[] = [];
-        if (createRecipeDto.ingredientIds) {
-            for (const id of createRecipeDto.ingredientIds) {
-                const ingredient = await this.ingredientsRepository.findOneBy({
-                    id: id,
-                });
-                if (ingredient) {
-                    ingredients.push(ingredient);
-                }
-            }
-        }
-
+        const ingredients = createRecipeDto.ingredients?.join(',');
+        const tags = createRecipeDto.tags?.join(',');
         const recipe = this.recipesRepository.create({
             ...createRecipeDto,
+            ingredients: ingredients,
+            tags: tags,
             user,
-            ingredients,
         });
         return await this.recipesRepository.save(recipe);
     }
@@ -61,9 +52,10 @@ export class RecipeService {
         const tagArray = tags.split(' ');
         const recipes = await this.readAll();
         return recipes.filter((recipe) =>
-            tagArray.every((tag) =>
-                recipe.tags.some((recipeTag) => recipeTag === tag),
-            ),
+            tagArray.every((tag) => {
+                const tags = recipe.tags.split(',');
+                return tags.some((recipeTag) => recipeTag === tag);
+            }),
         );
     }
 

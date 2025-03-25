@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
-import { CreateRecipeDto } from './dtos/CreateRecipeDto';
+import { CreateRecipeDto } from './dtos/create-recipe.dto';
 
 @Controller('recipe')
 export class RecipeController {
@@ -30,7 +30,9 @@ export class RecipeController {
     }
 
     @Post()
-    createRecipe(@Body() createRecipeDto: CreateRecipeDto) {
-        return this.recipeService.create(createRecipeDto);
+    createRecipe(
+        @Body() data: { userId: number; createRecipeDto: CreateRecipeDto },
+    ) {
+        return this.recipeService.create(data.createRecipeDto, data.userId);
     }
 }

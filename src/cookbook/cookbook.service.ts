@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { RecipeService } from 'src/recipe/recipe.service';
 import { CreateCookbookDto } from './dtos/create-cookbook.dto';
 import { User } from '../user/user.entity';
+import { Recipe } from '../recipe/recipe.entity';
 
 @Injectable()
 export class CookbookService {
@@ -17,10 +18,12 @@ export class CookbookService {
         private cookbookRepository: Repository<Cookbook>,
         @InjectRepository(User)
         private userRepository: Repository<User>,
+        @InjectRepository(Recipe)
+        private recipeRepository: Repository<Recipe>,
         private readonly recipeService: RecipeService,
     ) {}
 
-    async create(userId: number, createCookBookDto: CreateCookbookDto) {
+    async create(createCookBookDto: CreateCookbookDto, userId: number) {
         const user = await this.userRepository.findOneBy({ id: userId });
         if (!user) {
             throw new Error('User not found');
@@ -38,15 +41,16 @@ export class CookbookService {
     }
 
     async readAll(): Promise<Cookbook[]> {
-        return await this.cookbookRepository.find();
+        return await this.cookbookRepository.find({
+            relations: ['user', 'recipes'],
+        });
     }
 
     async readOne(id: number): Promise<Cookbook | null> {
-        const result = await this.cookbookRepository.find({
+        return await this.cookbookRepository.findOne({
             where: { id },
-            relations: {},
+            relations: ['user', 'recipes'],
         });
-        return result ? result[0] : null;
     }
 
     async update(id: number, data: Partial<Cookbook>) {
@@ -78,7 +82,7 @@ export class CookbookService {
             throw new NotFoundException(`Recipe with ID ${recipeId} not found`);
         }
 
-        cookbook?.recipes.push(recipe);
+        cookbook.recipes.push(recipe);
         await this.cookbookRepository.save(cookbook);
     }
 

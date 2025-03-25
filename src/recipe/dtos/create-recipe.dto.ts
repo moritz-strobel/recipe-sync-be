@@ -10,9 +10,6 @@ export class CreateRecipeDto {
     @IsString()
     title: string;
 
-    @IsNumber()
-    userId: number;
-
     @IsBoolean()
     isPublic: boolean;
 
@@ -26,7 +23,7 @@ export class CreateRecipeDto {
 
     @IsArray()
     @IsOptional()
-    ingredientIds: number[];
+    ingredients: string[];
 
     @IsNumber()
     @IsOptional()
