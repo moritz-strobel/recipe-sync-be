@@ -66,4 +66,8 @@ export class RecipeService {
     async delete(id: number): Promise<void> {
         await this.recipesRepository.delete(id);
     }
+
+    async readByUser(userId: number) {
+        return await this.recipesRepository.findBy({ user: { id: userId } });
+    }
 }

@@ -17,6 +17,11 @@ export class RecipeController {
     }
 
     @Get()
+    findByUser(@Query('user') userId: number) {
+        return this.recipeService.readByUser(userId);
+    }
+
+    @Get()
     async findByAttr(
         @Query('tags') tags: string,
         @Query('title') title: string,
