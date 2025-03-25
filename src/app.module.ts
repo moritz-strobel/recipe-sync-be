@@ -33,7 +33,6 @@ export class AppModule implements OnModuleInit {
 
     async onModuleInit() {
         // Example program run. Use command "rm -f db.sqlite && npm run start" to run with a clean database
-
         const user = await this.userService.create({
             first_name: 'Root',
             last_name: 'Root',

@@ -1,4 +1,9 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import {
+    forwardRef,
+    Inject,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Recipe } from './recipe.entity';
 import { Repository } from 'typeorm';
@@ -20,7 +25,7 @@ export class RecipeService {
     ): Promise<Recipe> {
         const user = await this.userService.readOne(userId);
         if (!user) {
-            throw new Error('User not found');
+            throw new NotFoundException('User not found');
         }
         const ingredients = createRecipeDto.ingredients?.join(',');
         const tags = createRecipeDto.tags?.join(',');

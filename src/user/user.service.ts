@@ -32,7 +32,7 @@ export class UserService {
         await this.cookbookService.create(
             {
                 title: 'Favorites',
-                isFavorite: true,
+                isFavorite: false,
                 isPublic: false,
                 isDeletable: false,
             },
@@ -61,5 +61,24 @@ export class UserService {
 
     async delete(id: number) {
         await this.usersRepository.delete(id);
+    }
+
+    async saveCookbook(userId: number, cookbookId: number) {
+        const user = await this.usersRepository.findOne({
+            where: { id: userId },
+            relations: ['savedCookbooks'],
+        });
+        if (!user) {
+            throw new BadRequestException('User not found');
+        }
+        const cookbook = await this.cookbookService.readOne(cookbookId);
+        if (!cookbook) {
+            throw new BadRequestException('Cookbook not found');
+        }
+        user.savedCookbooks.push(cookbook);
+        return await this.usersRepository.save({
+            ...user,
+            savedCookbooks: user.savedCookbooks,
+        });
     }
 }

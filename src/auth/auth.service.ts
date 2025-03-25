@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from '../user/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,7 +20,7 @@ export class AuthService {
         });
 
         if (!user) {
-            throw new Error('Email or Password is incorrect');
+            throw new BadRequestException('Email or Password is incorrect');
         }
         return user;
     }

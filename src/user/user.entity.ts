@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { BaseEntity } from '../shared/base';
 import { Cookbook } from 'src/cookbook/cookbook.entity';
 import { Recipe } from '../recipe/recipe.entity';
@@ -31,4 +31,8 @@ export class User extends BaseEntity {
 
     @OneToMany(() => Cookbook, (cookbook) => cookbook.user)
     cookbooks: Cookbook[];
+
+    @ManyToMany(() => Cookbook)
+    @JoinTable()
+    savedCookbooks: Cookbook[];
 }

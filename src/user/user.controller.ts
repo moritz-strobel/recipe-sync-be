@@ -4,6 +4,7 @@ import {
     Delete,
     Get,
     Param,
+    Post,
     Put,
     UsePipes,
     ValidationPipe,
@@ -31,6 +32,11 @@ export class UserController {
     )
     update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
         return this.userService.update(Number(id), updateUserDto);
+    }
+
+    @Post()
+    saveCookbook(@Body() data: { userId: number; cookbookId: number }) {
+        return this.userService.saveCookbook(data.userId, data.cookbookId);
     }
 
     @Delete(':id') remove(@Param('id') id: string) {
