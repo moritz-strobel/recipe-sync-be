@@ -25,12 +25,15 @@ export class RecipeController {
     async findByAttr(
         @Query('tags') tags: string,
         @Query('title') title: string,
+        @Query('userId') userId: number,
     ) {
         if (tags) {
             return await this.recipeService.readByTags(tags);
         } else if (title) {
             const recipes = await this.recipeService.readAll();
             return recipes.filter((recipe) => recipe.title === title);
+        } else if (userId) {
+            return await this.recipeService.readByUser(userId);
         }
     }
 
