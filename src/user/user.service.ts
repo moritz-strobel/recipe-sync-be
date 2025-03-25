@@ -81,4 +81,13 @@ export class UserService {
             savedCookbooks: user.savedCookbooks,
         });
     }
+
+    async findSaved(userId: number) {
+        const user = await this.usersRepository.findOne({
+            where: { id: userId },
+            relations: ['savedCookbooks'],
+        });
+
+        return user?.savedCookbooks;
+    }
 }

@@ -34,7 +34,12 @@ export class UserController {
         return this.userService.update(Number(id), updateUserDto);
     }
 
-    @Post()
+    @Get('saved-cookbooks')
+    findSaved(@Body() data: { userId: number }) {
+        return this.userService.findSaved(data.userId);
+    }
+
+    @Post('saved-cookbooks')
     saveCookbook(@Body() data: { userId: number; cookbookId: number }) {
         return this.userService.saveCookbook(data.userId, data.cookbookId);
     }
