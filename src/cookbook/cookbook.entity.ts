@@ -6,7 +6,7 @@ import { Recipe } from 'src/recipe/recipe.entity';
 @Entity()
 export class Cookbook extends BaseEntity {
     @ManyToOne(() => User)
-    user: User; // Reference to a user
+    user: User;
 
     @Column()
     title: string;
@@ -15,7 +15,7 @@ export class Cookbook extends BaseEntity {
     isFavorite: boolean;
 
     @Column()
-    isDeletable: boolean; // e.g. every user has a list of favorite recipes. this list shall not be public nor shall it be deleted (deletion results in empty cookbook)
+    isDeletable: boolean;
 
     @Column()
     isPublic: boolean;
@@ -24,9 +24,9 @@ export class Cookbook extends BaseEntity {
     description: string;
 
     @Column({ nullable: true })
-    coverImageUrl: string; // URL zum Titelbild
+    coverImage: string;
 
     @ManyToMany(() => Recipe)
     @JoinTable()
-    recipes: Recipe[]; // List of references to recipes
+    recipes: Recipe[];
 }

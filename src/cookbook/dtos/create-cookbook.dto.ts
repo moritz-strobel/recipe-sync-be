@@ -10,11 +10,14 @@ export class CreateCookbookDto {
     @IsBoolean()
     isPublic: boolean;
 
-    @IsOptional()
-    @IsString()
-    description: string;
+    @IsBoolean()
+    isDeletable: boolean;
 
     @IsOptional()
     @IsString()
-    coverImageUrl?: string;
+    description?: string;
+
+    @IsOptional()
+    @IsString()
+    coverImage?: string;
 }

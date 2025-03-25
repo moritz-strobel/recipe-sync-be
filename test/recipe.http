@@ -1,0 +1,37 @@
+###
+GET http://localhost:3000/recipe?title=Spaghetti
+Content-Type: application/json
+
+###
+
+###
+POST http://localhost:3000/recipe
+Content-Type: application/json
+
+{
+    "title": "Spaghetti",
+    "userId": 8,
+    "isPublic": true,
+    "generalScore": "healthy",
+    "nutriScore": "A",
+    "ingredientIds": [
+        1,
+        2,
+        3
+    ],
+    "steps": 5,
+    "preparationTime": 30,
+    "overallCookTime": 60,
+    "recipeText": "Boil water, cook pasta, add sauce.",
+    "imagesId": [
+        1,
+        2
+    ],
+    "videoUrl": "http://example.com/video",
+    "tagIds": [
+        1,
+        2
+    ]
+}
+
+###

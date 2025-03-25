@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    Injectable,
+    NotFoundException,
+    UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cookbook } from './cookbook.entity';
 import { Repository } from 'typeorm';
@@ -53,20 +57,32 @@ export class CookbookService {
         await this.cookbookRepository.delete(id);
     }
 
-    async addRecipeToCookbook(cookbookId: number, recipeId: number) {
-        const recipe = await this.recipeService.readOne(recipeId);
-        if (!recipe) {
-            throw new NotFoundException(`Recipe with ID ${recipeId} not found`);
-        }
-
+    async addRecipeToCookbook(
+        cookbookId: number,
+        userId: number,
+        recipeId: number,
+    ) {
         const cookbook = await this.readOne(cookbookId);
         if (!cookbook) {
             throw new NotFoundException(
                 `Cookbook with ID ${cookbookId} not found`,
             );
+        } else if (cookbook.user.id !== userId) {
+            throw new UnauthorizedException(
+                'User does not have permission to add recipe',
+            );
+        }
+
+        const recipe = await this.recipeService.readOne(recipeId);
+        if (!recipe) {
+            throw new NotFoundException(`Recipe with ID ${recipeId} not found`);
         }
 
         cookbook?.recipes.push(recipe);
         await this.cookbookRepository.save(cookbook);
+    }
+
+    async readByTitle(title: string) {
+        return await this.cookbookRepository.findOneBy({ title });
     }
 }

@@ -1,9 +1,11 @@
 ### Get all cookbooks
 GET http://localhost:3000/cookbook
+
 ###
 
 ### Get a cookbook by user id
 GET http://localhost:3000/cookbook/1
+
 ###
 
 ### Create a cookbook by user id
@@ -16,6 +18,7 @@ Content-Type: application/json
     "isFavorite": false,
     "isPublic": true
 }
+
 ###
 
 ### Add a recipe to a cookbook
@@ -25,4 +28,4 @@ Content-Type: application/json
 {
     "cookbookId": 1,
     "recipeId": 1
- }
+}

@@ -11,24 +11,32 @@ export class CookbookController {
         return await this.cookbookService.readAll();
     }
 
-    @Get(':userId')
-    async findAllByUser(@Param('userId') userId: number) {
+    @Get()
+    async findByTitle(@Query('title') title: string) {
+        return await this.cookbookService.readByTitle(title);
+    }
+
+    @Post()
+    async findAllByUser(@Body('userId') userId: number) {
         return await this.cookbookService.readAllByUser(userId);
     }
 
-    @Post(':userId')
+    @Post()
     async create(
-        @Param('userId') userId: number,
-        @Body() createCookbookDto: CreateCookbookDto,
+        @Body() data: { userId: number; cookbook: CreateCookbookDto },
     ) {
-        return this.cookbookService.create(userId, createCookbookDto);
+        return this.cookbookService.create(data.userId, data.cookbook);
     }
 
-    @Put(':userId')
+    @Put(':cookbookId')
     async addRecipe(
         @Param('cookbookId') cookbookId: number,
-        @Query('recipeId') recipeId: number,
+        @Body('data') data: { userId: number; recipeId: number },
     ) {
-        return this.cookbookService.addRecipeToCookbook(cookbookId, recipeId);
+        return this.cookbookService.addRecipeToCookbook(
+            cookbookId,
+            data.userId,
+            data.recipeId,
+        );
     }
 }

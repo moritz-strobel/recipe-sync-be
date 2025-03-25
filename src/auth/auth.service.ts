@@ -22,7 +22,7 @@ export class AuthService {
         if (!user) {
             throw new Error('Email or Password is incorrect');
         }
-        return user.id;
+        return user;
     }
 
     async register(createUserDto: CreateUserDto) {

@@ -4,12 +4,14 @@ import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { CookbookService } from '../cookbook/cookbook.service';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(User)
         private usersRepository: Repository<User>,
+        private cookbookService: CookbookService,
     ) {}
 
     async create(createUserDto: CreateUserDto) {
@@ -25,6 +27,14 @@ export class UserService {
                 'User with this username already exists',
             );
         }
+
+        await this.cookbookService.create(user.id, {
+            title: 'Favorites',
+            isFavorite: true,
+            isPublic: false,
+            isDeletable: false,
+        });
+
         return await this.usersRepository.save(user);
     }
 

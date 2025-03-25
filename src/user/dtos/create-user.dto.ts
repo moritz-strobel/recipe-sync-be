@@ -19,9 +19,9 @@ export class CreateUserDto {
 
     @IsOptional()
     @IsString()
-    profileTextUrl?: string;
+    profileText?: string;
 
     @IsOptional()
     @IsString()
-    profileImageUrl?: string;
+    profileImage?: string;
 }

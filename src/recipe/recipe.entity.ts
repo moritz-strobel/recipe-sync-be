@@ -1,15 +1,6 @@
-import {
-    Column,
-    Entity,
-    JoinTable,
-    ManyToMany,
-    ManyToOne,
-    OneToMany,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '../shared/base';
 import { User } from 'src/user/user.entity';
-import { Tag } from './tag.entity';
-import { Image } from './image.entity';
 import { Ingredient } from './ingredient.entity';
 
 @Entity()
@@ -31,9 +22,9 @@ export class Recipe extends BaseEntity {
 
     @Column({
         type: 'text',
-        enum: ['A', 'B', 'C', 'D', 'E', 'F'],
+        enum: ['A', 'B', 'C', 'D', 'E'],
     })
-    nutriScore: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
+    nutriScore: 'A' | 'B' | 'C' | 'D' | 'E';
 
     @OneToMany(() => Ingredient, (ing) => ing.recipe, {
         cascade: true,
@@ -53,25 +44,9 @@ export class Recipe extends BaseEntity {
     @Column()
     recipeText: string;
 
-    @OneToMany(() => Image, (image) => image.recipe, {
-        cascade: true,
-        eager: true,
-    })
-    images: Image[];
-
     @Column({ nullable: true })
-    videoUrl: string;
-
-    @Column({ nullable: true })
-    coverImage: Buffer;
-
-    @ManyToMany(() => Tag, { cascade: true, eager: true })
-    @JoinTable()
-    tags: Tag[];
+    coverImage: string;
 
     @Column()
-    views: number;
-
-    @Column()
-    shares: number;
+    tags: string[];
 }

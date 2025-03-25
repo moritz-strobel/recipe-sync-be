@@ -21,10 +21,10 @@ export class User extends BaseEntity {
     password: string;
 
     @Column({ nullable: true })
-    profileTextUrl: string;
+    profileText: string;
 
     @Column({ nullable: true })
-    profileImageUrl: string;
+    profileImage: string;
 
     @OneToMany(() => Recipe, (recipe) => recipe.user)
     recipes: Recipe[];
