@@ -34,7 +34,7 @@ export class CookbookService {
     }
 
     async getById(id: number) {
-        return await this.cookbookRepository.find({
+        return await this.cookbookRepository.findOne({
             where: { id },
             relations: ['user', 'recipes'],
         });
