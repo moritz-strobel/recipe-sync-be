@@ -9,6 +9,7 @@ import { RecipeService } from './recipe/recipe.service';
 import { CreateRecipeDto } from './recipe/dtos/create-recipe.dto';
 import { CreateCookbookDto } from './cookbook/dtos/create-cookbook.dto';
 import { CookbookService } from './cookbook/cookbook.service';
+import { coverImage } from './mock-images';
 
 @Module({
     imports: [
@@ -54,6 +55,7 @@ export class AppModule implements OnModuleInit {
                 overallCookTime: 25,
                 recipeText: '1. Boil pasta\n2. Fry pancetta\n3. Mix eggs...',
                 tags: ['italian', 'pasta', 'quick'],
+                coverImage: coverImage,
             },
             {
                 title: 'Vegetable Stir Fry',
@@ -66,6 +68,7 @@ export class AppModule implements OnModuleInit {
                 overallCookTime: 30,
                 recipeText: '1. Cook rice\n2. Chop vegetables\n3. Stir fry...',
                 tags: ['vegan', 'asian', 'healthy'],
+                coverImage: coverImage,
             },
         ];
 
@@ -83,7 +86,7 @@ export class AppModule implements OnModuleInit {
                 isDeletable: false,
                 isPublic: true,
                 description: 'My favorite Italian recipes',
-                coverImage: 'base64://italiancover',
+                coverImage: coverImage,
             },
             {
                 title: 'Healthy Meals',
@@ -91,7 +94,7 @@ export class AppModule implements OnModuleInit {
                 isDeletable: true,
                 isPublic: false,
                 description: 'Collection of healthy recipes',
-                coverImage: 'base64://healthycover',
+                coverImage: coverImage,
             },
         ];
 

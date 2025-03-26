@@ -7,13 +7,11 @@ export class CookbookController {
     constructor(private readonly cookbookService: CookbookService) {}
 
     @Get()
-    async findAll() {
-        return await this.cookbookService.readAll();
-    }
-
-    @Get()
     async findByTitle(@Query('title') title: string) {
-        return await this.cookbookService.readByTitle(title);
+        if (title) {
+            return await this.cookbookService.readByTitle(title);
+        }
+        return await this.cookbookService.readAll();
     }
 
     @Post()

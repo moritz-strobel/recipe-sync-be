@@ -22,7 +22,6 @@ export class CreateRecipeDto {
     nutriScore?: 'A' | 'B' | 'C' | 'D' | 'E';
 
     @IsArray()
-    @IsOptional()
     ingredients: string[];
 
     @IsNumber()
@@ -43,4 +42,8 @@ export class CreateRecipeDto {
     @IsArray()
     @IsOptional()
     tags?: string[];
+
+    @IsOptional()
+    @IsString()
+    coverImage?: string;
 }

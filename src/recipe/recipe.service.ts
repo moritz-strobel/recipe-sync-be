@@ -40,7 +40,7 @@ export class RecipeService {
 
     // (!) Attention: If you use this api in production, implement a "where" filter
     async readAll(): Promise<Recipe[]> {
-        return await this.recipesRepository.find();
+        return await this.recipesRepository.find({ relations: ['user'] });
     }
 
     async readOne(id: number): Promise<Recipe | null> {

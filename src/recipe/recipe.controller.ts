@@ -6,19 +6,9 @@ import { CreateRecipeDto } from './dtos/create-recipe.dto';
 export class RecipeController {
     constructor(private readonly recipeService: RecipeService) {}
 
-    @Get()
-    findAll() {
-        return this.recipeService.readAll();
-    }
-
     @Get(':id')
     findById(@Param('id') id: string) {
         return this.recipeService.readOne(Number(id));
-    }
-
-    @Get()
-    findByUser(@Query('user') userId: number) {
-        return this.recipeService.readByUser(userId);
     }
 
     @Get()
@@ -34,6 +24,8 @@ export class RecipeController {
             return recipes.filter((recipe) => recipe.title === title);
         } else if (userId) {
             return await this.recipeService.readByUser(userId);
+        } else {
+            return await this.recipeService.readAll();
         }
     }
 
