@@ -7,16 +7,16 @@ export class CookbookController {
     constructor(private readonly cookbookService: CookbookService) {}
 
     @Get()
-    async findByTitle(@Query('title') title: string) {
+    async findByTitle(
+        @Query('title') title: string,
+        @Query('userId') userId: number,
+    ) {
         if (title) {
             return await this.cookbookService.readByTitle(title);
+        } else if (userId) {
+            return await this.cookbookService.readAllByUser(userId);
         }
         return await this.cookbookService.readAll();
-    }
-
-    @Post()
-    async findAllByUser(@Body('userId') userId: number) {
-        return await this.cookbookService.readAllByUser(userId);
     }
 
     @Post()
@@ -31,7 +31,6 @@ export class CookbookController {
         @Param('cookbookId') cookbookId: number,
         @Body() data: { userId: number; recipeId: number },
     ) {
-        console.log(data);
         return this.cookbookService.addRecipeToCookbook(
             cookbookId,
             data.userId,
