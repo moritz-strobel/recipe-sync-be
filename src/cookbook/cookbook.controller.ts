@@ -10,11 +10,14 @@ export class CookbookController {
     async findByTitle(
         @Query('title') title: string,
         @Query('userId') userId: number,
+        @Query('id') id: number,
     ) {
         if (title) {
             return await this.cookbookService.readByTitle(title);
         } else if (userId) {
             return await this.cookbookService.readAllByUser(userId);
+        } else if (id) {
+            return await this.cookbookService.getById(id);
         }
         return await this.cookbookService.readAll();
     }

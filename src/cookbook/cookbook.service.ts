@@ -33,6 +33,13 @@ export class CookbookService {
         return await this.cookbookRepository.save(cookbook);
     }
 
+    async getById(id: number) {
+        return await this.cookbookRepository.find({
+            where: { id },
+            relations: ['user', 'recipes'],
+        });
+    }
+
     async readAllByUser(userId: number) {
         return await this.cookbookRepository.find({
             where: { user: { id: userId } },
