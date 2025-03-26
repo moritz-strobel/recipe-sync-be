@@ -6,6 +6,7 @@ import {
     Param,
     Post,
     Put,
+    Query,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
@@ -34,12 +35,12 @@ export class UserController {
         return this.userService.update(Number(id), updateUserDto);
     }
 
-    @Get('saved-cookbooks')
-    findSaved(@Body() data: { userId: number }) {
-        return this.userService.findSaved(data.userId);
+    @Get('saved')
+    findSaved(@Query('userId') userId: number) {
+        return this.userService.findSaved(userId);
     }
 
-    @Post('saved-cookbooks')
+    @Post('saved')
     saveCookbook(@Body() data: { userId: number; cookbookId: number }) {
         return this.userService.saveCookbook(data.userId, data.cookbookId);
     }
