@@ -34,7 +34,10 @@ export class CookbookService {
     }
 
     async readAllByUser(userId: number) {
-        return await this.cookbookRepository.findBy({ user: { id: userId } });
+        return await this.cookbookRepository.find({
+            where: { user: { id: userId } },
+            relations: ['user', 'recipes'],
+        });
     }
 
     async readAll(): Promise<Cookbook[]> {
