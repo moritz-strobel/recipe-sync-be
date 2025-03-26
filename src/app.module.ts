@@ -34,6 +34,7 @@ export class AppModule implements OnModuleInit {
 
     async onModuleInit() {
         // Example program run. Use command "rm -f db.sqlite && npm run start" to run with a clean database
+        if (await this.userService.readOne(1)) return;
         const user = await this.userService.create({
             first_name: 'Root',
             last_name: 'Root',
@@ -49,12 +50,12 @@ export class AppModule implements OnModuleInit {
                 isPublic: true,
                 generalScore: 'neutral',
                 nutriScore: 'B',
-                ingredients: ['spaghetti', 'eggs', 'pancetta', 'parmesan'],
+                ingredients: 'spaghetti,eggs,pancetta,parmesan',
                 steps: 5,
                 preparationTime: 15,
                 overallCookTime: 25,
                 recipeText: '1. Boil pasta\n2. Fry pancetta\n3. Mix eggs...',
-                tags: ['italian', 'pasta', 'quick'],
+                tags: 'italian,pasta,quick',
                 coverImage: coverImage,
             },
             {
@@ -62,12 +63,12 @@ export class AppModule implements OnModuleInit {
                 isPublic: true,
                 generalScore: 'healthy',
                 nutriScore: 'A',
-                ingredients: ['broccoli', 'carrots', 'soy sauce', 'rice'],
+                ingredients: 'broccoli,carrots,soy sauce,rice',
                 steps: 4,
                 preparationTime: 20,
                 overallCookTime: 30,
                 recipeText: '1. Cook rice\n2. Chop vegetables\n3. Stir fry...',
-                tags: ['vegan', 'asian', 'healthy'],
+                tags: 'vegan,asian,healthy',
                 coverImage: coverImage,
             },
         ];
@@ -83,7 +84,7 @@ export class AppModule implements OnModuleInit {
             {
                 title: 'Italian Favorites',
                 isFavorite: true,
-                isDeletable: false,
+                isDeletable: true,
                 isPublic: true,
                 description: 'My favorite Italian recipes',
                 coverImage: coverImage,

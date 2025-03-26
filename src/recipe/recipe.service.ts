@@ -27,8 +27,8 @@ export class RecipeService {
         if (!user) {
             throw new NotFoundException('User not found');
         }
-        const ingredients = createRecipeDto.ingredients?.join(',');
-        const tags = createRecipeDto.tags?.join(',');
+        const ingredients = createRecipeDto.ingredients;
+        const tags = createRecipeDto.tags;
         const recipe = this.recipesRepository.create({
             ...createRecipeDto,
             ingredients: ingredients,

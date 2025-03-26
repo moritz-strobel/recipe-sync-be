@@ -29,8 +29,9 @@ export class CookbookController {
     @Put(':cookbookId')
     async addRecipe(
         @Param('cookbookId') cookbookId: number,
-        @Body('data') data: { userId: number; recipeId: number },
+        @Body() data: { userId: number; recipeId: number },
     ) {
+        console.log(data);
         return this.cookbookService.addRecipeToCookbook(
             cookbookId,
             data.userId,
